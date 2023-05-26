@@ -119,7 +119,10 @@ export function createManifests() {
         .map((chunk: string) => JSON.stringify([chunk, [chunk]]))
     },
   }
-  const clientReferenceManifest: ClientReferenceManifest = new Proxy({} as any, proxyMethods())
+  const clientReferenceManifest: ClientReferenceManifest = new Proxy(
+    {} as any,
+    proxyMethods()
+  )
 
   const serverCSSManifest: ClientCSSReferenceManifest = {
     cssImports: new Proxy({} as any, cssImportProxyMethods),
