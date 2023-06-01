@@ -20,6 +20,7 @@ env:
   TURBO_TEAM: 'vercel'
   TURBO_REMOTE_ONLY: 'true'
   NEXT_TELEMETRY_DISABLED: 1
+  DATADOG_API_KEY: ${{ secrets.DATA_DOG_API_KEY }}
   # we build a dev binary for use in CI so skip downloading
   # canary next-swc binaries in the monorepo
   NEXT_SKIP_NATIVE_POSTINSTALL: 1

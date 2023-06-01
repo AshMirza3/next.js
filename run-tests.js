@@ -322,6 +322,18 @@ async function main() {
 
       const shouldRecordTestWithReplay = process.env.RECORD_REPLAY && isRetry
 
+      const traceEnv = process.env.DATADOG_API_KEY ? {
+        DD_API_KEY: process.env.DATADOG_API_KEY,
+        DD_CIVISIBILITY_AGENTLESS_ENABLED: 'true',
+        DD_ENV: 'ci',
+        DD_SERVICE: 'nextjs',
+        NODE_OPTIONS: !!process.env.DATADOG_API_KEY
+          ? '-r dd-trace/ci/init'
+          : undefined,
+      } : {}
+
+      console.log('---------------------------', !!process.env.DATADOG_API_KEY)
+
       const child = spawn(
         jestPath,
         [
@@ -341,6 +353,7 @@ async function main() {
           stdio: ['ignore', 'pipe', 'pipe'],
           env: {
             ...process.env,
+            ...traceEnv,
             RECORD_REPLAY: shouldRecordTestWithReplay,
             // run tests in headless mode by default
             HEADLESS: 'true',
